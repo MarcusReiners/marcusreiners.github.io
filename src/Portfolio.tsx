@@ -324,54 +324,77 @@ export default function Portfolio() {
             </div>
           </motion.header>
 
-          <section className="container mx-auto px-4 py-20" id="content">
-  <div className="grid md:grid-cols-2 gap-36 items-center max-w-8xl mx-auto">
+<section id="content" className="container mx-auto px-4 py-14 md:py-18 lg:py-24">
+  <div className="mx-auto grid max-w-screen-2xl grid-cols-1 lg:grid-cols-12 items-center gap-10 md:gap-14 lg:gap-20">
+    {/* Text column */}
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="max-w-2xl"
+      transition={{ duration: 0.5 }}
+      className="lg:col-span-6 xl:col-span-5"
     >
-      <h1 className="text-5xl md:text-6xl font-light leading-tight mb-6">
+      <h1 className="font-light leading-tight tracking-tight mb-5
+                     text-[clamp(1.9rem,3.2vw+1rem,3.75rem)]">
         Ich erforsche und gestalte Nutzererlebnisse
       </h1>
-      <p className="text-xl text-muted-foreground mb-8">
-        Masterstudent MCI (LMU) mit Praxis in Software, Hardware und UX. 
-        Von Research & Konzeption bis zu Hi-Fi-Prototypen.
+
+      <p className="text-muted-foreground mb-7
+                    text-[clamp(0.95rem,0.6vw+0.8rem,1.25rem)]">
+        Masterstudent MCI (LMU) mit Praxis in Software, Hardware und UX.
+        Von Research &amp; Konzeption bis zu Hi-Fi-Prototypen.
       </p>
-      <div className="flex gap-3 mb-12">
-        <Button asChild>
+
+      <div className="flex flex-wrap gap-3 mb-8 md:mb-10">
+        <Button asChild className="min-w-[9rem]">
           <a href="#work">View Work</a>
         </Button>
-        <Button asChild variant="outline">
+        <Button asChild variant="outline" className="min-w-[9rem]">
           <a href={`mailto:${CONTACT.email}`}>Get in Touch</a>
         </Button>
       </div>
+
       <div className="flex flex-wrap gap-2">
         {SKILLS.map((s) => (
-          <Badge key={s} variant="secondary" className="font-normal">
+          <Badge
+            key={s}
+            variant="secondary"
+            className="font-normal px-2.5 py-1 text-[13px] md:text-[12px] lg:text-xs"
+          >
             {s}
           </Badge>
         ))}
       </div>
     </motion.div>
 
+    {/* Image column */}
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
+      initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.3, duration: 0.6 }}
-      className="flex justify-center md:justify-start"
+      transition={{ delay: 0.1, duration: 0.5 }}
+      className="lg:col-span-6 xl:col-span-7"
     >
-      <div className="rounded-3xl overflow-hidden shadow-2xl w-96 h-96 md:w-[36rem] md:h-[36rem]">
-        <img
-          src={portrait}
-          alt="Portrait Marcus Reiners"
-          className="w-full h-full object-cover"
-        />
+      <div className="relative mx-auto w-full
+                      max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl
+                      aspect-[4/5] md:aspect-[5/6] lg:aspect-[16/13]
+                      rounded-3xl overflow-hidden shadow-2xl">
+        {/* Use <picture> so desktop can load a larger asset without punishing mobile */}
+        <picture>
+          <source srcSet={`${portrait}?w=1600 1x, ${portrait}?w=2400 2x`} media="(min-width: 1024px)" />
+          <source srcSet={`${portrait}?w=900 1x, ${portrait}?w=1400 2x`} media="(min-width: 640px)" />
+          <img
+            src={portrait}
+            alt="Portrait Marcus Reiners"
+            className="absolute inset-0 h-full w-full object-cover"
+            loading="eager"
+            decoding="async"
+            sizes="(min-width:1280px) 720px, (min-width:1024px) 560px, (min-width:640px) 420px, 300px"
+          />
+        </picture>
       </div>
     </motion.div>
   </div>
 </section>
+
 
 <section id="work" className="container mx-auto px-4 py-20 bg-muted/30">
   <SectionTitle title="Selected Work" />
